@@ -1,0 +1,31 @@
+﻿@model WebApp.Models.AuthenticationModel
+
+@{
+}
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SetupAuthentication">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <img src=@ViewData["Url"] />
+            <div class="form-group">
+                <label asp-for="Code" class="control-label"></label>
+                <input asp-for="Code" class="form-control" type="password" />
+                <span asp-validation-for="Code" class="text-danger"></span>
+                
+            </div>
+            <div class="form-group" >
+                <input asp-for="AuthKey" class="form-control" type="text" value=@ViewData["AuthKey"] hidden />
+                <input asp-for="UserId" class="form-control" type="text" value=@ViewData["UserId"] hidden />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Verify" class="btn btn-primary" />
+            </div>
+        </form>
+
+    </div>
+</div>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
