@@ -85,6 +85,8 @@ namespace WepApp.Controllers
             if (user == null)
                 return RedirectToAction("Index", "Home");
             bool isValid = _googleAuthService.VerifyAuthenticationCode(authentication.AuthKey, authentication.Code);
+            if (isValid && user.IsAuthSet)
+                return RedirectToAction("Index", "Dashbord");
             if (isValid)
             {
                 user.AuthKey = authentication.AuthKey;
@@ -93,25 +95,6 @@ namespace WepApp.Controllers
                 _context.SaveChanges();
                 return RedirectToAction("Index", "Dashbord");
             }
-            return View(authentication);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> CodeValidateAsync(AuthenticationModel authentication)
-        {
-            var user = await _context.User.FirstOrDefaultAsync(x=> x.Id == authentication.UserId);
-            if (user == null)
-                return RedirectToAction("Index", "Home");
-            bool isValid = _googleAuthService.VerifyAuthenticationCode(authentication.AuthKey, authentication.Code);
-            if (isValid)
-            {
-                return RedirectToAction("Index", "Dashbord");
-            }
-            return View();
-        }
-
-        public IActionResult CodeValidate(AuthenticationModel authentication)
-        {
             return View(authentication);
         }
 
