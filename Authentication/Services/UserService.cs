@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Build.ObjectModelRemoting;
+using Microsoft.EntityFrameworkCore;
 using Models.CustomModels;
 using Models.Data;
 using System;
@@ -54,7 +55,7 @@ namespace Authentication.Services
         {
             if (authentication == null)
                 return new ResponseModel(false, "Enter the values.", null);
-            var user = _context.User.FirstOrDefault(x => x.Id == authentication.UserId);
+            UserModel? user = _context.User.FirstOrDefault(x => x.Id == authentication.UserId);
             if (user == null)
                 return new ResponseModel(false, "No User exist.", null);
             bool isValid = _googleAuthService.VerifyAuthenticationCode(user.AuthKey, authentication.Code);
@@ -62,7 +63,7 @@ namespace Authentication.Services
                 return new ResponseModel(true, "Verified Successfully.", authentication);
             if (isValid)
             {
-                user.AuthKey = authentication.AuthKey;
+                user.AuthKey = user.AuthKey;
                 user.IsAuthSet = true;
                 _context.User.Update(user);
                 _context.SaveChanges();
@@ -75,6 +76,11 @@ namespace Authentication.Services
         {
             if (string.IsNullOrEmpty(userModel.FullName) || string.IsNullOrEmpty(userModel.Username) || string.IsNullOrEmpty(userModel.Password))
                 return new ResponseModel(false, "Fill mandatory fields.", userModel);
+            bool isExist = _context.User.Any(x => x.Username == userModel.Username);
+            if (isExist)
+            {
+                return new ResponseModel(false, "Username already exist",null);
+            }
             string key = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 10);
             UserModel user = new UserModel()
             {
@@ -91,6 +97,8 @@ namespace Authentication.Services
         public ResponseModel GenerateQrCode(int userId)
         {
             var user = _context.User.FirstOrDefault(x => x.Id == userId);
+            if (user.IsAuthSet)
+                return new ResponseModel(false, "", null);
             string imageBase64 = _googleAuthService.GenerateQrCode(user.AuthKey, user.Username);
             return new ResponseModel(true, "", imageBase64);
         }

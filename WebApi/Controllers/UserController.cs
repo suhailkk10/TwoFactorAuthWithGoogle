@@ -28,10 +28,10 @@ namespace WebApi.Controllers
                     "Fill Madatory feilds.");
             }
             var response = _userService.Login(loginModel.Username, loginModel.Password);
-            if (response != null && response.Status == true)
+            if (response != null)
             {
-                var auth = response.Data as AuthenticationModel;
-                return Ok(auth);
+                //var auth = response.Data as AuthenticationModel;
+                return Ok(response);
             }
             else
             {
@@ -45,10 +45,10 @@ namespace WebApi.Controllers
         public IActionResult SetupAuthentication(AuthenticationModel authenticationModel)
         {
             var response = _userService.SetupAuthentication(authenticationModel);
-            if (response != null && response.Status == true)
+            if (response != null )
             {
                 var auth = response.Data as AuthenticationModel;
-                return Ok(auth);
+                return Ok(response);
             }
             else
             {
@@ -62,10 +62,10 @@ namespace WebApi.Controllers
         public IActionResult RegisterUser(UserModel userModel)
         {
             var response = _userService.RegisterUser(userModel);
-            if (response != null && response.Status == true)
+            if (response != null)
             {
-                var auth = response.Data as AuthenticationModel;
-                return Ok(auth);
+                //var auth = response.Data as AuthenticationModel;
+                return Ok(response);
             }
             else
             {
