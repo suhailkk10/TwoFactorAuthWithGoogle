@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Models.CustomModels
+﻿namespace Models.CustomModels
 {
     public class ResponseModel
     {
-        public ResponseModel(bool status, string message, object data)
+        public ResponseModel(bool status, string message, object? data)
         {
             this.Status = status;
             this.Message = message;
@@ -17,6 +11,6 @@ namespace Models.CustomModels
 
         public bool Status { get; set; }
         public string? Message { get; set; }
-        public object Data { get; set; }
+        public object? Data { get; set; }
     }
 }

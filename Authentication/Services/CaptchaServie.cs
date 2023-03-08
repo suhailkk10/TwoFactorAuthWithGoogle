@@ -100,11 +100,6 @@ namespace Authentication.Services
                         Point startPoint = new Point(rand.Next(0, width), rand.Next(0, height));
                         Point endPoint = new Point(rand.Next(0, width), rand.Next(0, height));
                         graph.DrawLine(linePen, startPoint, endPoint);
-
-                        //Point bezierPoint1 = new Point(rand.Next(0, width), rand.Next(0, height));
-                        //Point bezierPoint2 = new Point(rand.Next(0, width), rand.Next(0, height));
-
-                        //graph.DrawBezier(linePen, startPoint, bezierPoint1, bezierPoint2, endPoint);
                     }
                 }
 

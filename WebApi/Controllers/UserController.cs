@@ -1,11 +1,8 @@
 ﻿using Authentication.Services;
 using Authentication.Settings;
-using Azure;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Models.CustomModels;
 using Models.Data;
-using System.Net;
 
 namespace WebApi.Controllers
 {
@@ -28,11 +25,9 @@ namespace WebApi.Controllers
             if (loginModel == null || string.IsNullOrEmpty(loginModel.Username) || string.IsNullOrEmpty(loginModel.Password) || string.IsNullOrEmpty(loginModel.CaptchaCode))
             {
                 return Ok(new ResponseModel(false, "Fill Madatory feilds.", null));
-                //return StatusCode(StatusCodes.Status400BadRequest,
-                //    "Fill Madatory feilds.");
             }
             string systemCaptcha = new AesOperation().DecryptString(General.Key, loginModel.SystemCaptcha);
-            //string systemCaptcha = new EncryptAndDecrypt().Decrypt(loginModel.SystemCaptcha);
+            
             DateTime captchaCreatedDateTime = Convert.ToDateTime(new AesOperation().DecryptString(General.Key, loginModel.TimeStamp));
             if ((DateTime.Now - captchaCreatedDateTime).TotalMinutes > 5)
             {
@@ -46,7 +41,6 @@ namespace WebApi.Controllers
             
             if (response != null)
             {
-                //var auth = response.Data as AuthenticationModel;
                 return Ok(response);
             }
             else
@@ -96,28 +90,6 @@ namespace WebApi.Controllers
         {
             var image =_userService.GenerateQrCode(userId);
             return Ok(image);
-        }
-
-        //[HttpGet]
-        //[Route("captcha")]
-        //public IActionResult GetCaptcha()
-        //{
-        //    string code = _captchaServie.GenerateCaptchaCode();
-        //    string imagestring = _captchaServie.GenerateCaptchaImage(500, 200, code);
-        //    var captcha = new EncryptAndDecrypt().Encrypt(code);
-        //    var captchamodel = new CaptchaModel()
-        //    {
-        //        ImageBase64 = "data:image/png;base64," + imagestring,
-        //        code = captcha,
-        //    };
-        //    return Ok(captchamodel);
-        //}
-
-        [HttpGet]
-        [Route("test")]
-        public IActionResult Test()
-        {
-            return Ok("success");
         }
     }
 }

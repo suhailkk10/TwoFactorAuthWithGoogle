@@ -1,13 +1,5 @@
-﻿using Microsoft.Build.ObjectModelRemoting;
-using Microsoft.EntityFrameworkCore;
-using Models.CustomModels;
+﻿using Models.CustomModels;
 using Models.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static QRCoder.PayloadGenerator.WiFi;
 
 namespace Authentication.Services
 {
@@ -28,13 +20,9 @@ namespace Authentication.Services
             {
                 if (!result.IsAuthSet)
                 {
-                    //string key = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 10);
-                    //string imageBase64 = _googleAuthService.GenerateQrCode(key, username);
                     AuthenticationModel authentication = new()
                     {
-                        //AuthKey = key,
                         UserId = result.Id,
-                        //ImageUrl = imageBase64,
                     };
                     return new ResponseModel(true, "", authentication);
                 }
@@ -82,7 +70,7 @@ namespace Authentication.Services
                 return new ResponseModel(false, "Username already exist",null);
             }
             string key = Guid.NewGuid().ToString().Replace("-", "").Substring(0, 10);
-            UserModel user = new UserModel()
+            UserModel user = new()
             {
                 FullName = userModel.FullName,
                 Username = userModel.Username,
@@ -97,7 +85,7 @@ namespace Authentication.Services
         public ResponseModel GenerateQrCode(int userId)
         {
             var user = _context.User.FirstOrDefault(x => x.Id == userId);
-            if (user.IsAuthSet)
+            if (user != null && user.IsAuthSet)
                 return new ResponseModel(false, "", null);
             string imageBase64 = _googleAuthService.GenerateQrCode(user.AuthKey, user.Username);
             return new ResponseModel(true, "", imageBase64);

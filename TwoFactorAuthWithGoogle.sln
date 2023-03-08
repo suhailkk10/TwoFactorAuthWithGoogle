@@ -3,13 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApp", "WepApp\WebApp.csproj", "{5F760BFA-9B8C-4F00-9448-A4DD170B8EA4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Authentication", "Authentication\Authentication.csproj", "{467EA11B-488E-48DC-BDBC-A7870A143852}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApi", "WebApi\WebApi.csproj", "{690001C2-36A0-4776-A951-E02A2020EAC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebApi", "WebApi\WebApi.csproj", "{690001C2-36A0-4776-A951-E02A2020EAC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csproj", "{9AC8C00F-DFFA-4527-BB00-7FF6894134A4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{9AC8C00F-DFFA-4527-BB00-7FF6894134A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +15,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{5F760BFA-9B8C-4F00-9448-A4DD170B8EA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5F760BFA-9B8C-4F00-9448-A4DD170B8EA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5F760BFA-9B8C-4F00-9448-A4DD170B8EA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5F760BFA-9B8C-4F00-9448-A4DD170B8EA4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{467EA11B-488E-48DC-BDBC-A7870A143852}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{467EA11B-488E-48DC-BDBC-A7870A143852}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{467EA11B-488E-48DC-BDBC-A7870A143852}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -2,7 +2,6 @@
 using Authentication.Settings;
 using Microsoft.AspNetCore.Mvc;
 using Models.CustomModels;
-using NuGet.Packaging.Signing;
 
 namespace WebApi.Controllers
 {
@@ -24,7 +23,6 @@ namespace WebApi.Controllers
             string imagestring = _captchaServie.GenerateCaptchaImage(500, 200, code);
             var captcha = new AesOperation().EncryptString(General.Key, code);
             var timestamp = new AesOperation().EncryptString(General.Key, DateTime.Now.ToString());
-            //var captcha = new EncryptAndDecrypt().Encrypt(code);
             var captchamodel = new CaptchaModel()
             {
                 ImageBase64 = "data:image/png;base64," + imagestring,
