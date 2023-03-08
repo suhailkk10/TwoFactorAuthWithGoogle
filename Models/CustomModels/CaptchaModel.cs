@@ -10,5 +10,6 @@ namespace Models.CustomModels
     {
         public string ImageBase64 { get; set; }
         public string code { get; set; }
+        public string TimeStamp { get; set; }
     }
 }

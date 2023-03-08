@@ -1,4 +1,5 @@
 ﻿using Authentication.Services;
+using Authentication.Settings;
 using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +31,13 @@ namespace WebApi.Controllers
                 //return StatusCode(StatusCodes.Status400BadRequest,
                 //    "Fill Madatory feilds.");
             }
-            string systemCaptcha = new EncryptAndDecrypt().Decrypt(loginModel.SystemCaptcha);
+            string systemCaptcha = new AesOperation().DecryptString(General.Key, loginModel.SystemCaptcha);
+            //string systemCaptcha = new EncryptAndDecrypt().Decrypt(loginModel.SystemCaptcha);
+            DateTime captchaCreatedDateTime = Convert.ToDateTime(new AesOperation().DecryptString(General.Key, loginModel.TimeStamp));
+            if ((DateTime.Now - captchaCreatedDateTime).TotalMinutes > 5)
+            {
+                return Ok(new ResponseModel(false, "Captcha expired.", null));
+            }
             if (systemCaptcha != loginModel.CaptchaCode)
             {
                 return Ok(new ResponseModel(false, "Incorrect Captcha.", null));
